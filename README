@@ -1,0 +1,8 @@
+
+Simple file transfer protocol using TCP socket
+Uasge:
+
+	client:
+	$ ./ttweetcli <ServerIP> <ServerPort> <path-to-file>
+	server:
+	$./ttweetsrv <Port>
