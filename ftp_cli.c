@@ -79,7 +79,7 @@ int main(int argc, char** argv){
     gettimeofday(&end,NULL);
     sscanf(ack, "%ld", &d);
 
-    printf("received ack %ld at %ld usec\n",d, ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
+    printf("received ack at %ld usec\n", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
 
   }
   printf("Client finish sending file\n");
