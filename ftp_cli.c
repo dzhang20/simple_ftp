@@ -37,6 +37,13 @@ int main(int argc, char** argv){
     printf("\nInvalid address/ Address not supported \n");
     return -1;
   }
+  //set max sending buffer
+  int cwin = 4086;
+  printf("set maximum congestion window to %d\n",cwin);
+  if((setsockopt(server_fd, SOL_SOCKET, SO_SNDBUF,&cwin, sizeof(cwin)))==-1){
+    perror("setsockopt");
+    exit(EXIT_FAILURE);
+  }
   //try connect to the server
   if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
     printf("\nConnection Failed \n");
@@ -61,11 +68,14 @@ int main(int argc, char** argv){
   size_t total_read=0;
   struct timeval start, end;
   gettimeofday(&start,NULL);
+  char ack [100];
   //reading file content and send it to server
   while((bytes_read = fread(buffer,1024,1,fp))>0){
     send(sock, buffer, bytes_read, 0);
     total_read += bytes_read;
     printf("%zu bytes sent\n", total_read);
+    read(sock,ack,100);
+    printf("received ack %s\n",ack);
   }
   printf("Client finish sending file\n");
   close(sock);
