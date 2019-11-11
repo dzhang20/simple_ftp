@@ -40,7 +40,7 @@ int main(int argc, char** argv){
   //set max sending buffer
   int cwin = 4086;
   printf("set maximum congestion window to %d\n",cwin);
-  if((setsockopt(server_fd, SOL_SOCKET, SO_SNDBUF,&cwin, sizeof(cwin)))==-1){
+  if((setsockopt(sock, SOL_SOCKET, SO_SNDBUF,&cwin, sizeof(cwin)))==-1){
     perror("setsockopt");
     exit(EXIT_FAILURE);
   }
@@ -69,13 +69,18 @@ int main(int argc, char** argv){
   struct timeval start, end;
   gettimeofday(&start,NULL);
   char ack [100];
+  size_t d;
   //reading file content and send it to server
   while((bytes_read = fread(buffer,1024,1,fp))>0){
     send(sock, buffer, bytes_read, 0);
     total_read += bytes_read;
-    printf("%zu bytes sent\n", total_read);
+    printf("%zu packets sent\n", total_read);
     read(sock,ack,100);
-    printf("received ack %s\n",ack);
+    gettimeofday(&end,NULL);
+    sscanf(ack, "%ld", &d);
+
+    printf("received ack %ld at %ld usec\n",d, ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
+
   }
   printf("Client finish sending file\n");
   close(sock);

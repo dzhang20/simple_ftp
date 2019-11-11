@@ -38,7 +38,7 @@ void* process_request(void* input){
     total_read +=bytes_read;
     gettimeofday(&cur,NULL);
     //print instant throughput
-    printf("%zu bytes received at %ld usec\n", total_read, ((cur.tv_sec * 1000000 + cur.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
+    printf("%zu packets received at %ld usec\n", total_read, ((cur.tv_sec * 1000000 + cur.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
     memset(buffer,0,1024);
     //send ack
     memcpy(buffer,&total_read,sizeof(total_read));
@@ -89,21 +89,21 @@ int main(int argc, char** argv){
     exit(EXIT_FAILURE);
   }
   //Enable quickack mode
-  if((setsockopt(server_fd, IPPROTO_TCP, TCP_QUICKACK,&opt, sizeof(opt)))==-1){
-    perror("setsockopt");
-    exit(EXIT_FAILURE);
-  }
+//  if((setsockopt(server_fd, IPPROTO_TCP, TCP_QUICKACK,&opt, sizeof(opt)))==-1){
+//    perror("setsockopt");
+//    exit(EXIT_FAILURE);
+//  }
 
   if((setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR,&opt, sizeof(opt)))==-1){
     perror("setsockopt");
     exit(EXIT_FAILURE);
   }
   //set congestion control algorithm
-  char* congestion_control = "reno";
-  if((setsockopt(server_fd, IPPROTO_TCP, TCP_CONGESTION ,&congestion_control, sizeof(congestion_control)))==-1){
-    perror("setsockopt");
-    exit(EXIT_FAILURE);
-  }
+//  char* congestion_control = "reno";
+//  if((setsockopt(server_fd, IPPROTO_TCP, TCP_CONGESTION ,&congestion_control, sizeof(congestion_control)))==-1){
+//    perror("setsockopt");
+//    exit(EXIT_FAILURE);
+//  }
   //bind socket to address
   if (bind(server_fd, res->ai_addr, res->ai_addrlen)<0){
     perror("bind failed");
