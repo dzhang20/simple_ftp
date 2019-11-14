@@ -1,7 +1,7 @@
 
 Simple file transfer protocol using TCP socket
 Uasge:
-
+	$make
 	client:
 	$ ./ttweetcli <ServerIP> <ServerPort> <path-to-file>
 	server:
