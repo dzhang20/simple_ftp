@@ -42,7 +42,7 @@ void* process_request(void* input){
     memset(buffer,0,1024);
     //send ack
     memcpy(buffer,&total_read,sizeof(total_read));
-    send(user->sock_id,buffer,sizeof(total_read),0);
+    //send(user->sock_id,buffer,sizeof(total_read),0);
     memset(buffer,0,1024);
     printf("sending ACK %zu\n",total_read);
   }
