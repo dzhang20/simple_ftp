@@ -68,8 +68,6 @@ int main(int argc, char** argv){
   size_t total_read=0;
   struct timeval start, end;
   gettimeofday(&start,NULL);
-  char ack [100];
-  size_t d;
   //reading file content and send it to server
   while((bytes_read = fread(buffer,1024,1,fp))>0){
     send(sock, buffer, bytes_read, 0);
