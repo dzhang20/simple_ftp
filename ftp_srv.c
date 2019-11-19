@@ -28,8 +28,8 @@ void* process_request(void* input){
   //start time of client request
   struct timeval start = user->start;
   //Server side : Receiver window set to 1024
-  char buffer [1024];
-  memset(buffer,0,1024);
+  char buffer [1350];
+  memset(buffer,0,1350);
   size_t bytes_read = 0;
   size_t total_read = 0;
   //current time
@@ -43,7 +43,7 @@ void* process_request(void* input){
     //send ack
     memcpy(buffer,&total_read,sizeof(total_read));
     //send(user->sock_id,buffer,sizeof(total_read),0);
-    memset(buffer,0,1024);
+    memset(buffer,0,1350);
     printf("sending ACK %zu\n",total_read);
   }
   gettimeofday(&cur,NULL);
@@ -82,7 +82,7 @@ int main(int argc, char** argv){
   }
   //set socket option
   //set max receiver buffer
-  int rwin = 1024;
+  int rwin = 1350;
   printf("set receiving window to %d\n",rwin);
   if((setsockopt(server_fd, SOL_SOCKET, SO_RCVBUF,&rwin, sizeof(rwin)))==-1){
     perror("setsockopt");

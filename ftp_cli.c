@@ -52,8 +52,8 @@ int main(int argc, char** argv){
 
 
   //client start sending requests
-  char buffer[1024];
-  memset(buffer,0,1024);
+  char buffer[1350];
+  memset(buffer,0,1350);
   FILE* fp = fopen(path, "r");
   if(fp == NULL){
     fprintf(stderr, "filepath no valid");
@@ -69,7 +69,7 @@ int main(int argc, char** argv){
   struct timeval start, end;
   gettimeofday(&start,NULL);
   //reading file content and send it to server
-  while((bytes_read = fread(buffer,1,1024,fp))>0){
+  while((bytes_read = fread(buffer,1,1350,fp))>0){
     send(sock, buffer, bytes_read, 0);
     total_read += bytes_read;
     printf("%zu packets sent\n", total_read);
